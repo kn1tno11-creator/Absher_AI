@@ -5,8 +5,8 @@ import { GoogleGenAI } from "@google/genai";
 // --- Configuration ---
 const ELEVENLABS_API_KEY = "sk_ca4eb8ba5d7ed2243d59fc8270bca7c59f02b34b1503a269";
 const ELEVENLABS_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"; // Professional assistant voice
-const USER_NAME_EN = "Mohammed Al-Saud";
-const USER_NAME_AR = "محمد آل سعود";
+const USER_NAME_EN = "Hadeel";
+const USER_NAME_AR = "هديل";
 const USER_ID = "1056789012";
 
 // --- Types & Mock Data ---
@@ -718,7 +718,7 @@ const DashboardView = ({ isHighContrast, data, lang }: any) => {
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
         <div>
            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-             {lang === 'ar-SA' ? 'مرحباً، محمد' : 'Good Morning, Mohammed'}
+             {lang === 'ar-SA' ? 'مرحباً، هديل' : 'Good Morning, Hadeel'}
            </h1>
            <p className="text-gray-500 mt-1 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 rounded-full bg-green-500"></span>
