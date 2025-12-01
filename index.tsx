@@ -5,8 +5,8 @@ import { GoogleGenAI } from "@google/genai";
 // --- Configuration ---
 const ELEVENLABS_API_KEY = "sk_ca4eb8ba5d7ed2243d59fc8270bca7c59f02b34b1503a269";
 const ELEVENLABS_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"; // Professional assistant voice
-const USER_NAME_EN = "Hadeel";
-const USER_NAME_AR = "هديل";
+const USER_NAME_EN = "Mohammed Al-Saud";
+const USER_NAME_AR = "محمد آل سعود";
 const USER_ID = "1056789012";
 
 // --- Types & Mock Data ---
@@ -129,7 +129,31 @@ const speakText = async (text: string, lang: Language) => {
 };
 
 const processVoiceCommand = async (transcript: string, currentContext: any, lang: Language) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // CRITICAL: Robust API Key Check
+  const apiKey = process.env.API_KEY;
+  if (!apiKey || apiKey === "" || apiKey === "undefined") {
+      console.error("CRITICAL: API Key is missing or invalid in processVoiceCommand.");
+      return {
+          action: "ERROR",
+          speechResponse: lang === 'ar-SA' 
+            ? "عذراً، مفتاح API غير موجود. يرجى التحقق من الإعدادات." 
+            : "I cannot connect. The API Key is missing.",
+          uiMessage: "Error: Missing API Key"
+      };
+  }
+
+  // --- Gemini Initialization ---
+  let ai;
+  try {
+      ai = new GoogleGenAI({ apiKey: apiKey });
+  } catch (initError) {
+      console.error("Gemini Init Failed:", initError);
+      return {
+        action: "ERROR",
+        speechResponse: "System Error. Please check console.",
+        uiMessage: "Initialization Error"
+      };
+  }
   
   const systemPrompt = `
     You are the intelligent Voice Assistant for 'Absher', the Saudi government services portal.
@@ -169,11 +193,11 @@ const processVoiceCommand = async (transcript: string, currentContext: any, lang
     
     return JSON.parse(response.text);
   } catch (e) {
-    console.error("Gemini Error", e);
+    console.error("Gemini Generation Error", e);
     return {
       action: "ERROR",
       speechResponse: lang === 'ar-SA' ? "عذراً، لم أتمكن من فهم ذلك." : "I'm sorry, I didn't catch that.",
-      uiMessage: "Error processing"
+      uiMessage: "Processing Error"
     };
   }
 };
@@ -1133,10 +1157,10 @@ function AbsherApp() {
             setAppointmentState({ step: 2, sector: result.data.sector });
         }
         if (result.action === 'SET_APPOINTMENT_SERVICE' && result.data?.service) {
-            setAppointmentState(prev => ({ ...prev, step: 3, service: result.data.service }));
+            setAppointmentState((prev: any) => ({ ...prev, step: 3, service: result.data.service }));
         }
         if (result.action === 'SET_APPOINTMENT_TIME' && result.data?.time) {
-            setAppointmentState(prev => ({ ...prev, step: 3, time: result.data.time })); // In real app, would confirm time
+            setAppointmentState((prev: any) => ({ ...prev, step: 3, time: result.data.time })); // In real app, would confirm time
         }
     }
 
