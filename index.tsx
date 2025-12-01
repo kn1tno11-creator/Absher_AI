@@ -5,8 +5,8 @@ import { GoogleGenAI } from "@google/genai";
 // --- Configuration ---
 const ELEVENLABS_API_KEY = "sk_ca4eb8ba5d7ed2243d59fc8270bca7c59f02b34b1503a269";
 const ELEVENLABS_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"; // Professional assistant voice
-const USER_NAME_EN = "Mohammed Al-Saud";
-const USER_NAME_AR = "محمد آل سعود";
+const USER_NAME_EN = "Hadeel";
+const USER_NAME_AR = "هديل";
 const USER_ID = "1056789012";
 
 // --- Types & Mock Data ---
