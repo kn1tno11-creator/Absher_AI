@@ -23,13 +23,15 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        # if your package.json is in a subfolder, add: working-directory: ./subfolder
 
       - name: Build
         run: npm run build
+        # if build output is not ./dist, update the path below accordingly
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -38,4 +40,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
