@@ -6,7 +6,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
 
   return {
-    base: mode === 'production' ? '/Absher_AI/' : '/', // <-- ADD this
+    // IMPORTANT: set your repo name here, with trailing slash
+    base: mode === 'production' ? '/Absher_AI/' : '/',
+
     server: {
       port: 3000,
       host: '0.0.0.0',
